@@ -1,4 +1,4 @@
-import { createApp } from "./";
+import { createApp } from "./app";
 
 function startApp() {
   createApp().listen(3000, () => {
