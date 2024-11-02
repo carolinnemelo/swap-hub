@@ -5,10 +5,11 @@ export function convertTemperatureFeature() {
     getRouter() {
       const router = Router();
       router.get("/", (req, res) => {
-        res.send(200);
+        res.status(200);
+        res.send("from router")
       });
       return router;
     },
-  };
+  }; 
 }
 
