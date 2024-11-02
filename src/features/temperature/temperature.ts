@@ -21,7 +21,7 @@ export function convertTemperatureFeature() {
       router.post("/convert", (req, res) => {
         const { fromUnit, toUnit, value } = req.body
         const convertedValue = convertTemperature(fromUnit, toUnit, value);
-        res.status(200).send(convertedValue);
+        res.status(200).send({convertedValue});
       });
       return router;
     },
