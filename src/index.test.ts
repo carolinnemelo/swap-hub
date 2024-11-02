@@ -20,12 +20,13 @@ test("GET /temperature", async () => {
 
 test("POST /temperature/convert", async () => {
   const app = createApp();
-  const convertTemp = {
+  const convertTemperature = {
     fromUnit: "Celsius",
     toUnit: "Kelvin",
     value: 25, 
   }
-  const result = await request(app).post("/temperature/convert").send(convertTemp);
+  const result = await request(app).post("/temperature/convert").send(convertTemperature);
+
   const expectedResponse = {
     fromUnit: "Celsius",
     toUnit: "Kelvin",
