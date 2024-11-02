@@ -11,8 +11,8 @@ export function convertTemperatureFeature() {
               console.log(error)
               res.status(401).send("error reading the file")
             }
-            const parsedData = JSON.parse(data);
-            res.status(200).send(parsedData);
+           const temperatureUnits = JSON.parse(data)[0].temperatureUnits;
+           res.status(200).send(temperatureUnits);
           });
           
       });
