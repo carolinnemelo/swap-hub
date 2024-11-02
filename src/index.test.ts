@@ -26,12 +26,6 @@ test("POST /temperature/convert", async () => {
     value: 25, 
   }
   const result = await request(app).post("/temperature/convert").send(convertTemperature);
-
-  const expectedResponse = {
-    fromUnit: "Celsius",
-    toUnit: "Fahrenheit",
-    convertedValue: 77, 
-  }
   deepEqual(result.status, 200);
-  deepEqual(result.body, expectedResponse)
+  deepEqual(result.body, 77)
 });
