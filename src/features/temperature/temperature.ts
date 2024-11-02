@@ -19,11 +19,9 @@ export function convertTemperatureFeature() {
       });
 
       router.post("/convert", (req, res) => {
-        const convertedValue = convertTemperature(req.body.value, "C", "K")
-        req.body.value = convertedValue;
-        req.body["convertedValue"] = req.body["value"];
-        delete req.body["value"];
-        res.status(200).send(req.body);
+        const { fromUnit, toUnit, value } = req.body
+        const convertedValue = convertTemperature(fromUnit, toUnit, value);
+        res.status(200).send(convertedValue);
       });
       return router;
     },
