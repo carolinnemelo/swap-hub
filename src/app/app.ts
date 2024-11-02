@@ -6,10 +6,10 @@ export function createApp() {
 
   app.use(express.json());
 
-  const temperatureFeature = convertTemperatureFeature()
-  app.use("/temperature", temperatureFeature.getRouter() )
+  const temperatureFeature = convertTemperatureFeature();
+  app.use("/temperature", temperatureFeature.getRouter());
 
-  app.get("/status", (req, res) => {
+  app.get("/", (req, res) => {
     res.status(200);
     res.send("createApp function");
   });
