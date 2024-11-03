@@ -82,9 +82,9 @@ test("GET /volume/history", async () => {
 
 });
 
-test("GET /volume/history/2024-nov-04", async () => {
+test("GET /volume/history/2024-nov-02", async () => {
   const app = createApp();
-  const result = await request(app).get("/volume/history/2024-nov-04");
+  const result = await request(app).get("/volume/history/2024-nov-02");
   deepEqual(result.status, 200);
 });
 
