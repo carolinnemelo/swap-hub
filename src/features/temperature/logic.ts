@@ -3,8 +3,9 @@ import convert from "convert-units";
 import { temperatureErrors } from "./error-messages";
 
 export function convertTemperature(fromUnit, toUnit, value: number) {
-  if (!fromUnit || !toUnit || !value) {
-    return "fail";
+  if (!fromUnit || !toUnit || value === null || value === undefined ) {
+    throw new Error(temperatureErrors.missingParameters);
+
   }
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
 
