@@ -2,9 +2,9 @@ import { Router } from "express";
 import fs from "fs";
 import { ZodError } from "zod";
 import { volumeSchema } from "./types";
-import { convertVolume, parseVolumeInputs } from "./logic";
+import { convertVolume} from "./logic";
 import { volumeErrors } from "../error-messages";
-import { saveConversion } from "./save-conversion";
+import { getVolumeUnits, parseVolumeInputs, saveConversion } from "./conversion-handlers";
 
 export function convertVolumeFeature() {
   return {
@@ -25,7 +25,8 @@ export function convertVolumeFeature() {
       router.post("/convert", (req, res) => {
         try {
           volumeSchema.parse(req.body);
-          const parsedInputs = parseVolumeInputs(req.body);
+          const volumeUnits = getVolumeUnits()
+          const parsedInputs = parseVolumeInputs(req.body, volumeUnits);
           const { fromUnit, toUnit, value } = parsedInputs;
           const convertedValue = convertVolume(fromUnit, toUnit, value);
           res.status(201).send({ convertedValue });

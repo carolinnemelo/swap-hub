@@ -1,5 +1,27 @@
 import { v4 } from "uuid";
-import fs from "fs"
+import fs from "fs";
+import { volumeErrors } from "../error-messages";
+import { normalizeUnit, parseValue } from "./logic";
+
+export function getVolumeUnits() {
+  try {
+    const data = JSON.parse(fs.readFileSync("./data/volume.json", "utf-8"));
+    return data[0].volumeUnits;
+  } catch {
+    throw new Error(volumeErrors.fileReadError);
+  }
+}
+export function parseVolumeInputs(req, volumeUnits) {
+  let { fromUnit, toUnit, value } = req;
+  try {
+    fromUnit = normalizeUnit(fromUnit, volumeUnits);
+    toUnit = normalizeUnit(toUnit, volumeUnits);
+    value = parseValue(value);
+    return { fromUnit, toUnit, value };
+  } catch (error) {
+    return error.message;
+  }
+}
 
 export function saveConversion({ fromUnit, toUnit, value, convertedValue }) {
   const id = generateId();

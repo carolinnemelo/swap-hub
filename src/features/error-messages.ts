@@ -9,7 +9,7 @@ export const temperatureErrors = {
 
 export const volumeErrors = {
   missingParameters: "All three parameters are required.",
-  fileReadError: "error reading the file",
+  fileReadError: "Error reading the file",
   invalidUnit:
     "Invalid unit. Accepted units are milliliter, liter, cubic centimeter, cubic millimeter, kiloliter, cubic meter, cubic kilometer, teaspoon, tablespoon, cubic inch and fluid ounce.",
   negativeValue: "Value must be a positive number",
