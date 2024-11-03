@@ -103,10 +103,10 @@ test("POST /volume/convert", async () => {
   deepEqual(result.body.convertedValue, expectedValue);
 });
 
-test("DELETE /volume/history/2024-nov-02", async () => {
+test("DELETE /volume/history/2024-nov-01", async () => {
   const app = createApp();
-  fs.writeFileSync("data/volume-conversions-day/2024-nov-02.json", "[]", "utf-8");
+  fs.writeFileSync("data/volume-conversions-day/2024-nov-01.json", "[]", "utf-8");
 
-  const result = await request(app).delete("/volume/history/2024-nov-02");
+  const result = await request(app).delete("/volume/history/2024-nov-01");
   deepEqual(result.status, 200);
 });
