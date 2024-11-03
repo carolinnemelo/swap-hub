@@ -1,9 +1,9 @@
-import { deepEqual, notDeepEqual } from "node:assert";
+import { deepEqual } from "node:assert";
 import test from "node:test";
 import request from "supertest";
+import fs from "fs"
 import { createApp } from "./app";
 import { convertTemperature } from "./features/temperature/logic";
-import { temperatureSchema } from "./features/temperature/types";
 import { convertVolume } from "./features/volume/logic";
 
 test("supertest works!", async () => {
@@ -103,8 +103,10 @@ test("POST /volume/convert", async () => {
   deepEqual(result.body.convertedValue, expectedValue);
 });
 
-test("DELETE /volume/history/2024-nov-03", async () => {
+test("DELETE /volume/history/2024-nov-02", async () => {
   const app = createApp();
-  const result = await request(app).delete("/volume/history/2024-nov-03");
+  fs.writeFileSync("data/volume-conversions-day/2024-nov-02.json", "[]", "utf-8");
+
+  const result = await request(app).delete("/volume/history/2024-nov-02");
   deepEqual(result.status, 204);
 });
