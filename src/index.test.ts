@@ -51,7 +51,7 @@ test("POST /temperature/convert - bad request.", async () => {
 });
 
 
-test.only("GET /volume", async () => {
+test("GET /volume", async () => {
   const app = createApp();
   const result = await request(app).get("/volume");
 
