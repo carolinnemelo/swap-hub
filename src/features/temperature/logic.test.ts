@@ -4,10 +4,13 @@ import { deepEqual } from "node:assert/strict";
 import { temperatureErrors } from "./error-messages";
 import assert from "node:assert";
 
-test("When one of the arguments isn't given, should return error message.", async () => {
-  const result = convertTemperature("", "F", 25);
-  const errorMessage = "fail"
-  deepEqual(result, errorMessage);
+test("When one of the arguments isn't given, should throw an error.", async () => {
+  assert.throws(
+    () => {
+      convertTemperature("", "F", 25);
+    },
+    { name: "Error", message: temperatureErrors.missingParameters }
+  );
 });
 
 test("Function converts the temperature", async () => {
