@@ -3,6 +3,7 @@ import fs from "fs";
 import { ZodError } from "zod";
 import { volumeSchema } from "./types";
 import { convertVolume, parseVolumeInputs } from "./logic";
+import { v4 } from "uuid";
 
 export function convertVolumeFeature() {
   return {
@@ -27,6 +28,7 @@ export function convertVolumeFeature() {
           const { fromUnit, toUnit, value } = parsedInputs;
           const convertedValue = convertVolume(fromUnit, toUnit, value);
           res.status(200).send({ convertedValue });
+          saveConversion({ fromUnit, toUnit, value, convertedValue });
         } catch (error) {
           if (error instanceof ZodError) {
             const zodErrorMessage = JSON.stringify(error.issues[0].message);
@@ -36,8 +38,23 @@ export function convertVolumeFeature() {
           }
         }
       });
-      
+
       return router;
     },
   };
+}
+
+function generateId() {
+  return v4();
+}
+
+
+function createConversionFilePerDay() {
+  const day = new Date().toString();
+  const dayArray = day.split(" ");
+  const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
+  const path = `data/volume-conversions-day/${fileName}.json`;
+  if(!fs.existsSync(path)) { 
+    fs.appendFileSync(path, "[]");
+  }
 }
