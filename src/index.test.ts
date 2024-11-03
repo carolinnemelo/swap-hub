@@ -51,10 +51,25 @@ test("POST /temperature/convert - bad request.", async () => {
 });
 
 
-test("GET /volume", async () => {
+test.only("GET /volume", async () => {
   const app = createApp();
   const result = await request(app).get("/volume");
 
+  const volumeUnits = {
+    milliliter: "ml",
+    liter: "l",
+    cubicCentimeter: "cm3",
+    cubicMillimeter: "mm3",
+    kiloliter: "kl",
+    cubicMeter: "m3",
+    cubicKilometer: "km3",
+    teaspoon: "tsp",
+    tablespoon: "Tbs",
+    cubicInch: "in3",
+    fluidOunce: "fl-oz",
+    cup: "cup",
+  };
+
   deepEqual(result.status, 200);
-  deepEqual(result.body, ["Kelvin", "Celsius", "Fahrenheit"]);
+  deepEqual(result.body, volumeUnits);
 });
