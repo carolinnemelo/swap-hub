@@ -1,11 +1,9 @@
 import { Router } from "express";
 import fs from "fs";
-import {
-  convertTemperature,
-  parseTemperatureInputs,
-} from "./logic";
+import { convertTemperature } from "./logic";
 import { temperatureSchema } from "./types";
 import { ZodError } from "zod";
+import { parseTemperatureInputs } from "./conversion-handler";
 
 export function convertTemperatureFeature() {
   return {
