@@ -6,8 +6,6 @@ export function convertTemperature(fromUnit, toUnit, value: number) {
   if (!fromUnit || !toUnit || !value) {
     return "fail";
   }
-  fromUnit = normalizeUnit(fromUnit);
-  toUnit = normalizeUnit(toUnit);
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
 
   return convertedValue;
@@ -25,7 +23,7 @@ export function normalizeUnit(unit: string) {
     return "K";
   }
 
-  return "Not a acceptable unit";
+  throw new Error(temperatureErrors.invalidUnit);
 }
 
 export function isTemperatureRangeValid(fromUnit, value) {
