@@ -1,4 +1,4 @@
-import convert, { Unit } from "convert-units";
+import convert from "convert-units";
 
 export function convertTemperature(fromUnit, toUnit, value: number) {
   if (!fromUnit || !toUnit || !value) {
