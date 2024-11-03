@@ -52,9 +52,9 @@ test("POST /temperature/convert - bad request.", async () => {
 });
 
 
-test("GET /volume/units", async () => {
+test("GET /volume", async () => {
   const app = createApp();
-  const result = await request(app).get("/volume/units");
+  const result = await request(app).get("/volume");
 
   const volumeUnits = {
     milliliter: "ml",
@@ -85,6 +85,6 @@ test("POST /volume/convert", async () => {
     .post("/volume/convert")
     .send(testConvertVolume);
   const expectedValue = convertVolume("ml", "Tbs", "34");
-  deepEqual(result.status, 200);
+  deepEqual(result.status, 201);
   deepEqual(result.body.convertedValue, expectedValue);
 });

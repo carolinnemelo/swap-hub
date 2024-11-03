@@ -10,7 +10,7 @@ export function convertVolumeFeature() {
     getRouter() {
       const router = Router();
 
-      router.get("/units", (req, res) => {
+      router.get("/", (req, res) => {
         fs.readFile("./data/volume.json", "utf-8", (error, data) => {
           if (error) {
             console.log(error);
@@ -27,7 +27,7 @@ export function convertVolumeFeature() {
           const parsedInputs = parseVolumeInputs(req.body);
           const { fromUnit, toUnit, value } = parsedInputs;
           const convertedValue = convertVolume(fromUnit, toUnit, value);
-          res.status(200).send({ convertedValue });
+          res.status(201).send({ convertedValue });
           saveConversion({ fromUnit, toUnit, value, convertedValue });
         } catch (error) {
           if (error instanceof ZodError) {
