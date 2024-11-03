@@ -1,7 +1,9 @@
 import test from "node:test";
 import assert from "node:assert";
+import { convertVolume } from "./logic";
+import { volumeErrors } from "../error-messages";
 
-test("When one of the arguments isn't given, should throw an error.", async () => {
+test.only("When one of the arguments isn't given, should throw an error.", async () => {
   assert.throws(
     () => {
       convertVolume("", "ml", 10);

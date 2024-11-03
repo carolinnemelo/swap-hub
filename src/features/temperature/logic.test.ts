@@ -1,7 +1,7 @@
 import test from "node:test";
 import { convertTemperature, isTemperatureRangeValid, normalizeUnit } from "./logic";
 import { deepEqual } from "node:assert/strict";
-import { temperatureErrors } from "./error-messages";
+import { temperatureErrors } from "../error-messages";
 import assert from "node:assert";
 
 test("When one of the arguments isn't given, should throw an error.", async () => {
