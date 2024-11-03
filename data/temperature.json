@@ -1,5 +1,5 @@
 [
-  {
-    "temperatureUnits": ["Kelvin", "Celsius", "Fahrenheit"]
-  }
-]
+    {
+      "temperatureUnits": ["Kelvin", "Celsius", "Fahrenheit"]
+    }
+  ]

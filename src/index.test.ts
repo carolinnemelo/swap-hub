@@ -49,3 +49,12 @@ test("POST /temperature/convert - bad request.", async () => {
     
   deepEqual(result.status, 400);
 });
+
+
+test("GET /volume", async () => {
+  const app = createApp();
+  const result = await request(app).get("/volume");
+
+  deepEqual(result.status, 200);
+  deepEqual(result.body, ["Kelvin", "Celsius", "Fahrenheit"]);
+});
