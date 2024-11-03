@@ -3,12 +3,12 @@ import { volumeErrors } from "../error-messages";
 import fs from "fs";
 
 export function parseVolumeInputs(req) {
-  let { fromUnit, toUnit } = req;
+  let { fromUnit, toUnit, value } = req;
   try {
     fromUnit = normalizeUnit(fromUnit);
     toUnit = normalizeUnit(toUnit);
-
-    return { fromUnit, toUnit };
+    value = parseValue(value)
+    return { fromUnit, toUnit, value };
   } catch (error) {
     return  error.message;
   }
@@ -20,6 +20,17 @@ export function convertVolume(fromUnit, toUnit, value) {
   }
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
   return convertedValue;
+}
+
+export function parseValue (value) {
+  value = Number(value);
+  if(isNaN(value)) {
+    throw new Error(volumeErrors.invalidValue);
+  }
+  if(value< 0) {
+    throw new Error(volumeErrors.negativeValue);
+  }
+return value
 }
 
 export function normalizeUnit(unit: string) {
