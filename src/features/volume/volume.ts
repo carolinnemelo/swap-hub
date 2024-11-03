@@ -64,7 +64,7 @@ export function convertVolumeFeature() {
         const file = files.find((file) => file === `${date}.json`);
         if (file) {
           fs.unlinkSync(`data/volume-conversions-day/${file}`)
-          res.status(204).send(`${file} deleted.`);
+          res.status(200).send(`${file} deleted.`);
         } else {
           res.status(404).send(volumeErrors.invalidFileName);
         }

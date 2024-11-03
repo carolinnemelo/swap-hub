@@ -82,9 +82,9 @@ test("GET /volume/history", async () => {
 
 });
 
-test("GET /volume/history/2024-nov-03", async () => {
+test("GET /volume/history/2024-nov-04", async () => {
   const app = createApp();
-  const result = await request(app).get("/volume/history/2024-nov-03");
+  const result = await request(app).get("/volume/history/2024-nov-04");
   deepEqual(result.status, 200);
 });
 
@@ -108,5 +108,5 @@ test("DELETE /volume/history/2024-nov-02", async () => {
   fs.writeFileSync("data/volume-conversions-day/2024-nov-02.json", "[]", "utf-8");
 
   const result = await request(app).delete("/volume/history/2024-nov-02");
-  deepEqual(result.status, 204);
+  deepEqual(result.status, 200);
 });
