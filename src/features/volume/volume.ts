@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import { volumeSchema } from "./types";
 import { convertVolume, parseVolumeInputs } from "./logic";
 import { v4 } from "uuid";
+import { volumeErrors } from "../error-messages";
 
 export function convertVolumeFeature() {
   return {
@@ -44,6 +45,18 @@ export function convertVolumeFeature() {
         res.status(200).send(files);
       });
 
+      router.get("/history/:date", (req, res) => {
+        const date = req.params.date;
+        const files = fs.readdirSync("data/volume-conversions-day");
+        const file = files.find((file) => file === `${date}.json`);
+        if (file) {
+          const fileContent = JSON.parse(fs.readFileSync(`data/volume-conversions-day/${file}`, "utf-8"));
+          res.status(200).send(fileContent);
+        } else {
+          res.status(404).send(volumeErrors.invalidFileName);
+        }
+      });
+
       return router;
     },
   };
@@ -75,7 +88,7 @@ function generateId() {
    if (!fs.existsSync("data/volume-conversions-day")) {
      fs.mkdirSync("data/volume-conversions-day", { recursive: true });
    }
-   const day = new Date().toString();
+   const day = new Date().toString().toLowerCase();
    const dayArray = day.split(" ");
    const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
    const time = dayArray[4];

@@ -1,87 +1,39 @@
 [
   {
-    "id": "6236ddce-5be1-46cc-a275-ffa3627b21a0",
-    "time": "21:18:26",
+    "id": "730037a8-0c8b-40b0-83d7-f0c719aac4c4",
+    "time": "21:42:49",
     "fromUnit": "ml",
     "value": 34,
     "toUnit": "Tbs",
     "convertedValue": 2.2993535368000004
   },
   {
-    "id": "e124a358-21c3-49e1-8b45-13716a6c1370",
-    "time": "21:18:52",
+    "id": "2cb3b559-81c3-4d4f-a5c1-5b06837695e0",
+    "time": "21:44:28",
     "fromUnit": "ml",
     "value": 34,
     "toUnit": "Tbs",
     "convertedValue": 2.2993535368000004
   },
   {
-    "id": "eb3363c6-2c3e-40a5-84e8-998f4a08f7c7",
-    "time": "21:20:55",
+    "id": "bb2dec84-6177-4a89-a707-46d17286c80f",
+    "time": "21:44:49",
     "fromUnit": "ml",
     "value": 34,
     "toUnit": "Tbs",
     "convertedValue": 2.2993535368000004
   },
   {
-    "id": "0fd7c8f8-74e0-4342-9395-afba670102d2",
-    "time": "21:21:16",
+    "id": "e52b3d3d-12c4-448f-b370-4e6777deda63",
+    "time": "21:45:45",
     "fromUnit": "ml",
     "value": 34,
     "toUnit": "Tbs",
     "convertedValue": 2.2993535368000004
   },
   {
-    "id": "184c436c-adc1-4a6f-8aa8-1e9764a84a69",
-    "time": "21:23:00",
-    "fromUnit": "ml",
-    "value": 34,
-    "toUnit": "Tbs",
-    "convertedValue": 2.2993535368000004
-  },
-  {
-    "id": "2ef8c7b1-ec4f-4b96-8384-ea303fa1ddc6",
-    "time": "21:27:52",
-    "fromUnit": "ml",
-    "value": 34,
-    "toUnit": "Tbs",
-    "convertedValue": 2.2993535368000004
-  },
-  {
-    "id": "effb1909-08e2-41cb-b9d5-ea245ab06fa7",
-    "time": "21:28:31",
-    "fromUnit": "ml",
-    "value": 34,
-    "toUnit": "Tbs",
-    "convertedValue": 2.2993535368000004
-  },
-  {
-    "id": "10520ca2-ace2-45de-82dd-9df9293f2ca1",
-    "time": "21:29:41",
-    "fromUnit": "ml",
-    "value": 34,
-    "toUnit": "Tbs",
-    "convertedValue": 2.2993535368000004
-  },
-  {
-    "id": "b2d29026-80fc-4a89-a3d6-fc61d50833c9",
-    "time": "21:31:12",
-    "fromUnit": "ml",
-    "value": 34,
-    "toUnit": "Tbs",
-    "convertedValue": 2.2993535368000004
-  },
-  {
-    "id": "a8c00f58-5b3a-4b0c-bc97-22d91d094647",
-    "time": "21:32:27",
-    "fromUnit": "ml",
-    "value": 34,
-    "toUnit": "Tbs",
-    "convertedValue": 2.2993535368000004
-  },
-  {
-    "id": "a5982abf-b6e8-4bd5-8ceb-234f1a1dc258",
-    "time": "21:32:55",
+    "id": "b7610868-e2b8-42e6-8ca4-c2ac0fd31598",
+    "time": "21:46:12",
     "fromUnit": "ml",
     "value": 34,
     "toUnit": "Tbs",

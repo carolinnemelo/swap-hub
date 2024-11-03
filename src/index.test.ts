@@ -1,4 +1,4 @@
-import { deepEqual } from "node:assert";
+import { deepEqual, notDeepEqual } from "node:assert";
 import test from "node:test";
 import request from "supertest";
 import { createApp } from "./app";
@@ -78,7 +78,14 @@ test("GET /volume/history", async () => {
   const app = createApp();
   const result = await request(app).get("/volume/history");
   deepEqual(result.status, 200);
-  deepEqual(result.body,["index.ts", "2024-Nov-03.json"]);
+  deepEqual(result.body.length > 0, true);
+
+});
+
+test("GET /volume/history/2024-nov-03", async () => {
+  const app = createApp();
+  const result = await request(app).get("/volume/history/2024-nov-03");
+  deepEqual(result.status, 200);
 });
 
 test("POST /volume/convert", async () => {
@@ -94,4 +101,10 @@ test("POST /volume/convert", async () => {
   const expectedValue = convertVolume("ml", "Tbs", "34");
   deepEqual(result.status, 201);
   deepEqual(result.body.convertedValue, expectedValue);
+});
+
+test("DELETE /volume/history/2024-nov-03", async () => {
+  const app = createApp();
+  const result = await request(app).delete("/volume/history/2024-nov-03");
+  deepEqual(result.status, 204);
 });

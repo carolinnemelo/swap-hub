@@ -14,4 +14,5 @@ export const volumeErrors = {
     "Invalid unit. Accepted units are milliliter, liter, cubic centimeter, cubic millimeter, kiloliter, cubic meter, cubic kilometer, teaspoon, tablespoon, cubic inch and fluid ounce.",
   negativeValue: "Value must be a positive number",
   invalidValue: "Value must be a number",
+  invalidFileName: "File not found for the given date",
 };
