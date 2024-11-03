@@ -16,7 +16,7 @@ export function createApp() {
 
   app.get("/", (req, res) => {
     res.status(200);
-    res.send("createApp function");
+    res.send("Welcome to SwapUnit");
   });
   return app;
 }
