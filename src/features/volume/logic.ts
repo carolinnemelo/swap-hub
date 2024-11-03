@@ -6,6 +6,5 @@ export function convertVolume(fromUnit, toUnit, value) {
     throw new Error(volumeErrors.missingParameters);
   }
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
+  return convertedValue;
 }
-
-
