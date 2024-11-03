@@ -1,5 +1,5 @@
 import test from "node:test";
-import { convertTemperature, normalizeUnit } from "./logic";
+import { convertTemperature, isTemperatureRangeValid, normalizeUnit } from "./logic";
 import { deepEqual } from "node:assert/strict";
 
 test("When one of the arguments isn't given, should return error message", async () => {
@@ -22,8 +22,10 @@ test("When units are lowercase letter or the whole word", () => {
 }); 
 
 
-test("When value is not applicable to given unit, should return error message", async () => {
-    const result = convertTemperature("k", "F", -25);
-    const errorMessage = "fail"
-    deepEqual(result, errorMessage);
-  });
+test("if value is not a valid value given a temperature range, should return false", async () => {
+  const result: boolean[] = [];
+  result.push(isTemperatureRangeValid("C", -300));
+  result.push(isTemperatureRangeValid("K", -1));
+  result.push(isTemperatureRangeValid("F", -500));
+  deepEqual(result, [false, false, false]);
+});
