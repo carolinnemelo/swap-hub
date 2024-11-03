@@ -39,6 +39,11 @@ export function convertVolumeFeature() {
         }
       });
 
+      router.get("/history", (req, res) => {
+        const files = fs.readdirSync("data/volume-conversions-day");
+        res.status(200).send(files);
+      });
+
       return router;
     },
   };

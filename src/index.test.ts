@@ -74,6 +74,13 @@ test("GET /volume", async () => {
   deepEqual(result.body, volumeUnits);
 });
 
+test("GET /volume/history", async () => {
+  const app = createApp();
+  const result = await request(app).get("/volume/history");
+  deepEqual(result.status, 200);
+  deepEqual(result.body,["index.ts", "2024-Nov-03.json"]);
+});
+
 test("POST /volume/convert", async () => {
   const app = createApp();
   const testConvertVolume = {
