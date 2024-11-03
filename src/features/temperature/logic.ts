@@ -1,5 +1,6 @@
 import { error } from "console";
 import convert from "convert-units";
+import { temperatureErrors } from "./error-messages";
 
 export function convertTemperature(fromUnit, toUnit, value: number) {
   if (!fromUnit || !toUnit || !value) {
@@ -29,15 +30,15 @@ export function normalizeUnit(unit: string) {
 
 export function isTemperatureRangeValid(fromUnit, value) {
   if (fromUnit === "K" && value < 0) {
-    return false;
+    throw new Error(temperatureErrors.kelvin);
   }
 
   if (fromUnit === "C" && value < -273.15) {
-    return false;
+    throw new Error(temperatureErrors.celsius);
   }
 
   if (fromUnit === "F" && value < -459.67) {
-    return false;
+    throw new Error(temperatureErrors.fahrenheit);
   }
 
   return true;
