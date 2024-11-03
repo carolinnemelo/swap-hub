@@ -79,12 +79,12 @@ test("POST /volume/convert", async () => {
   const testConvertVolume = {
     fromUnit: "milliliter",
     toUnit: "tablespoon",
-    value: "15",
+    value: "34",
   };
   const result = await request(app)
     .post("/volume/convert")
     .send(testConvertVolume);
-  const expectedValue = convertVolume("ml", "Tbs", "15");
+  const expectedValue = convertVolume("ml", "Tbs", "34");
   deepEqual(result.status, 200);
   deepEqual(result.body.convertedValue, expectedValue);
 });

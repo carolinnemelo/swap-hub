@@ -48,28 +48,36 @@ function generateId() {
   return v4();
 }
 
-function saveConversion({ fromUnit, toUnit, value, convertedValue }) {
-  const id = generateId();
-  const {path, time} = createConversionFilePerDay();
-  const conversion = {
-    id,
-    time,
-    fromUnit,
-    value,
-    toUnit,
-    convertedValue,
-  };
-  fs.writeFileSync(path, JSON.stringify(conversion));
-}
 
-function createConversionFilePerDay() {
-  const day = new Date().toString();
-  const dayArray = day.split(" ");
-  const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
-  const time = dayArray[4];
-  const path = `data/volume-conversions-day/${fileName}.json`;
-  if (!fs.existsSync(path)) {
-    fs.appendFileSync(path, "[]");
-  }
-  return {path, time};
-}
+ function saveConversion({ fromUnit, toUnit, value, convertedValue }) {
+   const id = generateId();
+   const { filePath, time } = createConversionFilePerDay();
+   const conversion = {
+     id,
+     time,
+     fromUnit,
+     value,
+     toUnit,
+     convertedValue,
+   };
+   const fileContent = fs.readFileSync(filePath, "utf-8");
+   const currentConversions = JSON.parse(fileContent);
+   console.log({ currentConversions });
+   currentConversions.push(conversion);
+   fs.writeFileSync(filePath, JSON.stringify(conversion));
+ }
+
+ function createConversionFilePerDay() {
+   const day = new Date().toString();
+   const dayArray = day.split(" ");
+   const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
+   const time = dayArray[4];
+   const filePath = `data/volume-conversions-day/${fileName}.json`;
+   if (!fs.existsSync("data/volume-conversions-day")) {
+     fs.mkdirSync("data/volume-conversions-day", { recursive: true });
+   }
+   if (!fs.existsSync(filePath)) {
+     fs.writeFileSync(filePath, "[]", "utf-8");
+   }
+   return { filePath, time };
+ }
