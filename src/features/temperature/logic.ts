@@ -1,4 +1,3 @@
-import { error } from "console";
 import convert from "convert-units";
 import { temperatureErrors } from "./error-messages";
 
