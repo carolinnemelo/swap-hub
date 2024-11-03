@@ -1,7 +1,13 @@
 import { Router } from "express";
 import fs from "fs";
-import { convertTemperature, isTemperatureRangeValid, normalizeUnit } from "./logic";
+import {
+  convertTemperature,
+  isTemperatureRangeValid,
+  normalizeUnit,
+  parseTemperatureInputs,
+} from "./logic";
 import { temperatureSchema } from "./types";
+import { ZodError } from "zod";
 
 export function convertTemperatureFeature() {
   return {
@@ -33,13 +39,16 @@ export function convertTemperatureFeature() {
       router.post("/convert", (req, res) => {
         try {
           temperatureSchema.parse(req.body);
-          const { fromUnit, toUnit, value } = req.body;
+          const parsedInputs = parseTemperatureInputs(req.body);
+          const { fromUnit, toUnit, value } = parsedInputs;
           const convertedValue = convertTemperature(fromUnit, toUnit, value);
-
           res.status(200).send({ convertedValue });
         } catch (error) {
-          const zodErrorMessage = JSON.stringify(error.issues[0].message);
-          res.status(400).send(zodErrorMessage);
+          if (error instanceof ZodError) {
+            const zodErrorMessage = JSON.stringify(error.issues[0].message);
+            res.status(400).send(zodErrorMessage);
+          }
+          res.status(400).send(error.message);
         }
       });
       return router;
