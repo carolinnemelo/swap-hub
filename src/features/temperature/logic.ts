@@ -23,5 +23,5 @@ export function normalizeUnit(unit: string) {
     return "K";
   }
 
-  return null;
+  return "Not a acceptable unit";
 }
