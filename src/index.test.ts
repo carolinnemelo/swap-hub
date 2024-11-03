@@ -67,7 +67,6 @@ test("GET /volume", async () => {
     tablespoon: "Tbs",
     cubicInch: "in3",
     fluidOunce: "fl-oz",
-    cup: "cup",
   };
 
   deepEqual(result.status, 200);
