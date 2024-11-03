@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { isTemperatureRangeValid, normalizeUnit } from "./logic";
 
 type ConvertObject = z.infer<typeof temperatureSchema>
 

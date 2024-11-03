@@ -2,7 +2,7 @@ import convert from "convert-units";
 import { temperatureErrors } from "./error-messages";
 
 export function parseTemperatureInputs(req) {
-  let { fromUnit, toUnit, value } = req; //when refactoring check if let is best practice
+  let { fromUnit, toUnit, value } = req;
   try {
     fromUnit = normalizeUnit(fromUnit);
     toUnit = normalizeUnit(toUnit);
@@ -13,7 +13,6 @@ export function parseTemperatureInputs(req) {
     return  error.message ;
   }
 }
-
 
 export function normalizeUnit(unit: string) {
   unit = unit.toLowerCase();

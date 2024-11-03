@@ -2,8 +2,6 @@ import { Router } from "express";
 import fs from "fs";
 import {
   convertTemperature,
-  isTemperatureRangeValid,
-  normalizeUnit,
   parseTemperatureInputs,
 } from "./logic";
 import { temperatureSchema } from "./types";
