@@ -20,3 +20,10 @@ test("When units are lowercase letter or the whole word", () => {
   result.push(normalizeUnit("celsius"));
   deepEqual(result, ["C", "F", "C"]);
 }); 
+
+
+test("When value is not applicable to given unit, should return error message", async () => {
+    const result = convertTemperature("k", "F", -25);
+    const errorMessage = "fail"
+    deepEqual(result, errorMessage);
+  });
