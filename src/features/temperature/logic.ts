@@ -1,15 +1,19 @@
 import convert from "convert-units";
 import { temperatureErrors } from "./error-messages";
 
-export function convertTemperature(fromUnit, toUnit, value: number) {
-  if (!fromUnit || !toUnit || value === null || value === undefined ) {
-    throw new Error(temperatureErrors.missingParameters);
+export function parseTemperatureInputs(req) {
+  let { fromUnit, toUnit, value } = req; //when refactoring check if let is best practice
+  try {
+    fromUnit = normalizeUnit(fromUnit);
+    toUnit = normalizeUnit(toUnit);
+    isTemperatureRangeValid(fromUnit, value);
 
+    return { fromUnit, toUnit, value };
+  } catch (error) {
+    return  error.message ;
   }
-  const convertedValue = convert(value).from(fromUnit).to(toUnit);
-
-  return convertedValue;
 }
+
 
 export function normalizeUnit(unit: string) {
   unit = unit.toLowerCase();
@@ -40,4 +44,13 @@ export function isTemperatureRangeValid(fromUnit, value) {
   }
 
   return true;
+}
+
+export function convertTemperature(fromUnit, toUnit, value: number) {
+  if (!fromUnit || !toUnit || value === null || value === undefined) {
+    throw new Error(temperatureErrors.missingParameters);
+  }
+  const convertedValue = convert(value).from(fromUnit).to(toUnit);
+
+  return convertedValue;
 }
