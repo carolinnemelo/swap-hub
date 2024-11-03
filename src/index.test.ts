@@ -36,14 +36,13 @@ test("POST /temperature/convert", async () => {
 });
 
 
-test("POST /temperature/convert for different inputs", async () => {
+test("POST /temperature/convert - bad request.", async () => {
   const app = createApp();
   const testConvertTemperature = {
-    fromUnit: "Celsius",
+    fromUnit: "moreThanTenLetters",
     toUnit: "F",
     value: 25,
   };
-  // const validatedInput = temperatureSchema.parse(testConvertTemperature);
   const result = await request(app)
     .post("/temperature/convert")
     .send(testConvertTemperature);

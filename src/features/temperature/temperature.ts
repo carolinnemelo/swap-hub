@@ -31,14 +31,18 @@ export function convertTemperatureFeature() {
       });
 
       router.post("/convert", (req, res) => {
-        temperatureSchema.parse(req.body)
-        const { fromUnit, toUnit, value } = req.body
+        try {
+          temperatureSchema.parse(req.body);
+          const { fromUnit, toUnit, value } = req.body;
+          const convertedValue = convertTemperature(fromUnit, toUnit, value);
 
-        const convertedValue = convertTemperature(fromUnit, toUnit, value);
-        res.status(200).send({convertedValue});
+          res.status(200).send({ convertedValue });
+        } catch (error) {
+          const zodErrorMessage = JSON.stringify(error.issues[0].message);
+          res.status(400).send(zodErrorMessage);
+        }
       });
       return router;
     },
   };
 }
-
