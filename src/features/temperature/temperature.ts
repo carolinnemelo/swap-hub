@@ -45,8 +45,9 @@ export function convertTemperatureFeature() {
           if (error instanceof ZodError) {
             const zodErrorMessage = JSON.stringify(error.issues[0].message);
             res.status(400).send(zodErrorMessage);
+          } else {
+            res.status(400).send(error.message);
           }
-          res.status(400).send(error.message);
         }
       });
       return router;
