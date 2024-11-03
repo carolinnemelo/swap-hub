@@ -1,6 +1,7 @@
 import { Router } from "express";
 import fs from "fs";
-import { convertTemperature } from "./logic";
+import { convertTemperature, isTemperatureRangeValid, normalizeUnit } from "./logic";
+import { temperatureSchema } from "./types";
 
 export function convertTemperatureFeature() {
   return {
@@ -30,7 +31,9 @@ export function convertTemperatureFeature() {
       });
 
       router.post("/convert", (req, res) => {
+        temperatureSchema.parse(req.body)
         const { fromUnit, toUnit, value } = req.body
+
         const convertedValue = convertTemperature(fromUnit, toUnit, value);
         res.status(200).send({convertedValue});
       });

@@ -7,10 +7,10 @@ export const temperatureSchema = z.object({
   fromUnit: z
     .string()
     .max(10)
-    .transform((unit) => normalizeUnit(unit)),
+    .transform((fromUnit) => normalizeUnit(fromUnit)),
   toUnit: z
     .string()
     .max(10)
-    .transform((unit) => normalizeUnit(unit)),
-  value: z.number().transform((value, fromUnit) => isTemperatureRangeValid(fromUnit, value)),
+    .transform((toUnit) => normalizeUnit(toUnit)),
+  value: z.number(),
 });
