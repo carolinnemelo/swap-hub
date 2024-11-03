@@ -1,0 +1,18 @@
+[
+  {
+    "id": "5279a072-a1ea-4cf1-af06-9cf76bcfd656",
+    "time": "21:16:08",
+    "fromUnit": "ml",
+    "value": 34,
+    "toUnit": "Tbs",
+    "convertedValue": 2.2993535368000004
+  },
+  {
+    "id": "19d1b9a9-764c-445d-a4e1-fe9d9345ef2c",
+    "time": "21:17:04",
+    "fromUnit": "ml",
+    "value": 34,
+    "toUnit": "Tbs",
+    "convertedValue": 2.2993535368000004
+  }
+]

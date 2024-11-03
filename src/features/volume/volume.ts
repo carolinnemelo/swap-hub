@@ -63,7 +63,7 @@ function generateId() {
    const fileContent = fs.readFileSync(filePath, "utf-8");
    const currentConversions = JSON.parse(fileContent);
    currentConversions.push(conversion);
-   fs.writeFileSync(filePath, JSON.stringify(currentConversions));
+   fs.writeFileSync(filePath, JSON.stringify(currentConversions, null, 2));
  }
 
  function createConversionFilePerDay() {
