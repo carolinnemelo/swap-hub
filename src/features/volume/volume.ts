@@ -62,10 +62,7 @@ function generateId() {
    };
    const fileContent = fs.readFileSync(filePath, "utf-8");
    const currentConversions = JSON.parse(fileContent);
-   console.log({ currentConversions });
-   console.log({fileContent, currentConversions, conversion})
    currentConversions.push(conversion);
-   console.log({currentConversions})
    fs.writeFileSync(filePath, JSON.stringify(currentConversions));
  }
 
