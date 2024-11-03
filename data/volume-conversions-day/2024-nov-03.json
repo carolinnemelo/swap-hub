@@ -70,5 +70,13 @@
     "value": 34,
     "toUnit": "Tbs",
     "convertedValue": 2.2993535368000004
+  },
+  {
+    "id": "f610bee6-0c36-4fdf-88a4-0b34c3b9910d",
+    "time": "23:59:22",
+    "fromUnit": "ml",
+    "value": 3,
+    "toUnit": "l",
+    "convertedValue": 0.003
   }
 ]
