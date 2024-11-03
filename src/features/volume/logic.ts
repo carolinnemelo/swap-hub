@@ -2,6 +2,18 @@ import convert from "convert-units";
 import { volumeErrors } from "../error-messages";
 import fs from "fs";
 
+export function parseVolumeInputs(req) {
+  let { fromUnit, toUnit } = req;
+  try {
+    fromUnit = normalizeUnit(fromUnit);
+    toUnit = normalizeUnit(toUnit);
+
+    return { fromUnit, toUnit };
+  } catch (error) {
+    return  error.message;
+  }
+}
+
 export function convertVolume(fromUnit, toUnit, value) {
   if (!fromUnit || !toUnit || value === null || value === undefined) {
     throw new Error(volumeErrors.missingParameters);

@@ -24,4 +24,3 @@ test("When units are lowercase letter or the whole word, should normalize them."
   result.push(normalizeUnit("milliliter"));
   deepEqual(result, ["l", "ml"]);
 }); 
-  
