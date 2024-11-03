@@ -1,5 +1,6 @@
 import convert from "convert-units";
 import { volumeErrors } from "../error-messages";
+import fs from "fs";
 
 export function convertVolume(fromUnit, toUnit, value) {
   if (!fromUnit || !toUnit || value === null || value === undefined) {
@@ -7,4 +8,21 @@ export function convertVolume(fromUnit, toUnit, value) {
   }
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
   return convertedValue;
+}
+
+export function normalizeUnit(unit: string) {
+  unit = unit.toLowerCase();
+  try {
+    const data = JSON.parse(fs.readFileSync("./data/volume.json", "utf-8"));
+    const volumeUnits = data[0].volumeUnits;
+    if (volumeUnits[unit]) {
+      return volumeUnits[unit];
+    }
+    const values = Object.values(volumeUnits);
+    const unitByValue = values.filter((value) => value === unit);
+    console.log({ unitByValue });
+    return unit[0];
+  } catch {
+    throw new Error(volumeErrors.invalidUnit);
+  }
 }

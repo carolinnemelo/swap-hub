@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert";
-import { convertVolume } from "./logic";
+import { convertVolume, normalizeUnit } from "./logic";
 import { volumeErrors } from "../error-messages";
 import { deepEqual } from "node:assert/strict";
 
@@ -13,7 +13,7 @@ test("When one of the arguments isn't given, should throw an error.", async () =
   );
 });
 
-test.only("Function converts the volume", async () => {
+test("Function converts the volume", async () => {
   const result = convertVolume("l", "ml", 1);
   deepEqual(result, 1000);
 });
