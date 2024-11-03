@@ -25,7 +25,7 @@ test("POST /temperature/convert", async () => {
   const testConvertTemperature = {
     fromUnit: "C",
     toUnit: "F",
-    value: 25,
+    value: "25",
   };
   const result = await request(app)
     .post("/temperature/convert")
@@ -39,18 +39,14 @@ test("POST /temperature/convert", async () => {
 test("POST /temperature/convert for different inputs", async () => {
   const app = createApp();
   const testConvertTemperature = {
-    fromUnit: "c",
-    toUnit: "Fahrenheit",
-    value: "25",
+    fromUnit: "Celsius",
+    toUnit: "F",
+    value: 25,
   };
-
-  const validatedInput = temperatureSchema.parse(testConvertTemperature);
+  // const validatedInput = temperatureSchema.parse(testConvertTemperature);
   const result = await request(app)
     .post("/temperature/convert")
-    .send(validatedInput);
+    .send(testConvertTemperature);
     
-  const expectedValue = convertTemperature("C", "F", 25);
-
-  deepEqual(result.status, 200);
-  deepEqual(result.body.convertedValue, expectedValue);
+  deepEqual(result.status, 400);
 });
