@@ -6,3 +6,7 @@ export const temperatureErrors = {
     "Invalid unit. Accepted units are Celsius, Fahrenheit, and Kelvin.",
   missingParameters: "All three parameters are required.",
 };
+
+export const volumeErrors = {
+  missingParameters: "All three parameters are required.",
+};

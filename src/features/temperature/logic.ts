@@ -1,5 +1,5 @@
 import convert from "convert-units";
-import { temperatureErrors } from "./error-messages";
+import { temperatureErrors } from "../error-messages";
 
 export function parseTemperatureInputs(req) {
   let { fromUnit, toUnit, value } = req;
