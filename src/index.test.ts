@@ -52,9 +52,9 @@ test("POST /temperature/convert - bad request.", async () => {
 });
 
 
-test("GET /volume", async () => {
+test("GET /volume/units", async () => {
   const app = createApp();
-  const result = await request(app).get("/volume");
+  const result = await request(app).get("/volume/units");
 
   const volumeUnits = {
     milliliter: "ml",

@@ -10,7 +10,7 @@ export function convertVolumeFeature() {
     getRouter() {
       const router = Router();
 
-      router.get("/", (req, res) => {
+      router.get("/units", (req, res) => {
         fs.readFile("./data/volume.json", "utf-8", (error, data) => {
           if (error) {
             console.log(error);
