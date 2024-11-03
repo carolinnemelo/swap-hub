@@ -13,7 +13,7 @@ test("When one of the arguments isn't given, should throw an error.", async () =
   );
 });
 
-test.only("Function converts the temperature", async () => {
-  const result = convertVolume("cup", "ml", 1);
-  deepEqual(result, 240);
+test.only("Function converts the volume", async () => {
+  const result = convertVolume("l", "ml", 1);
+  deepEqual(result, 1000);
 });
