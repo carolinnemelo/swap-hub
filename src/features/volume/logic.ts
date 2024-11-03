@@ -43,7 +43,6 @@ export function normalizeUnit(unit: string) {
     }
     const values = Object.values(volumeUnits);
     const unitByValue = values.filter((value) => value === unit);
-    console.log({ unitByValue });
     return unit[0];
   } catch {
     throw new Error(volumeErrors.invalidUnit);
