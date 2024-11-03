@@ -4,6 +4,7 @@ import request from "supertest";
 import { createApp } from "./app";
 import { convertTemperature } from "./features/temperature/logic";
 import { temperatureSchema } from "./features/temperature/types";
+import { convertVolume } from "./features/volume/logic";
 
 test("supertest works!", async () => {
   const app = createApp();
@@ -66,9 +67,24 @@ test("GET /volume", async () => {
     teaspoon: "tsp",
     tablespoon: "Tbs",
     cubicInch: "in3",
-    fluidOunce: "fl-oz",
+    fluidOunce: "fl-oz"
   };
 
   deepEqual(result.status, 200);
   deepEqual(result.body, volumeUnits);
+});
+
+test("POST /volume/convert", async () => {
+  const app = createApp();
+  const testConvertVolume = {
+    fromUnit: "milliliter",
+    toUnit: "tablespoon",
+    value: "15",
+  };
+  const result = await request(app)
+    .post("/volume/convert")
+    .send(testConvertVolume);
+  const expectedValue = convertVolume("ml", "Tbs", "15");
+  deepEqual(result.status, 200);
+  deepEqual(result.body.convertedValue, expectedValue);
 });
