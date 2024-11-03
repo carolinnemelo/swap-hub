@@ -48,13 +48,28 @@ function generateId() {
   return v4();
 }
 
+function saveConversion({ fromUnit, toUnit, value, convertedValue }) {
+  const id = generateId();
+  const {path, time} = createConversionFilePerDay();
+  const conversion = {
+    id,
+    time,
+    fromUnit,
+    value,
+    toUnit,
+    convertedValue,
+  };
+  fs.writeFileSync(path, JSON.stringify(conversion));
+}
 
 function createConversionFilePerDay() {
   const day = new Date().toString();
   const dayArray = day.split(" ");
   const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
+  const time = dayArray[4];
   const path = `data/volume-conversions-day/${fileName}.json`;
-  if(!fs.existsSync(path)) { 
+  if (!fs.existsSync(path)) {
     fs.appendFileSync(path, "[]");
   }
+  return {path, time};
 }
