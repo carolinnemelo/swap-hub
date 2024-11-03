@@ -1,5 +1,6 @@
 import express from "express";
 import { convertTemperatureFeature } from "../features/temperature/temperature";
+import { convertVolumeFeature } from "../features/volume/volume";
 
 export function createApp() {
   const app = express();
@@ -8,6 +9,10 @@ export function createApp() {
 
   const temperatureFeature = convertTemperatureFeature();
   app.use("/temperature", temperatureFeature.getRouter());
+
+  const volumeFeature = convertVolumeFeature();
+  app.use("/volume", volumeFeature.getRouter());
+
 
   app.get("/", (req, res) => {
     res.status(200);

@@ -16,6 +16,7 @@ export function convertVolumeFeature() {
           res.status(200).send(volumeUnits);
         });
       });
+      return router;
     },
   };
 }
