@@ -1,6 +1,5 @@
 import convert from "convert-units";
 import { volumeErrors } from "../error-messages";
-import fs from "fs";
 
 
 export function convertVolume(fromUnit, toUnit, value) {
