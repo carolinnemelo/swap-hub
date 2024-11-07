@@ -6,7 +6,7 @@ import { convertVolume } from "./logic";
 import { volumeErrors } from "../error-messages";
 import { getVolumeUnits, parseVolumeInputs, saveConversion } from "./service";
 
-export function createVolumeRouter() {
+export function createVolumeRouter(service) {
   const router = express.Router();
 
   router.get("/", (req, res) => {

@@ -1,17 +1,19 @@
 import { Pancake } from ".";
+import { VolumeSchemaObject } from "./types";
 
 export type Db = {
   viewAll: () => Promise<Pancake[]>;
-  cook: (pancake: Pancake) => Promise<void>;
+  convert: (conversion: VolumeSchemaObject) => Promise<void>;
 };
 
 export function createDb(): Db {
-  const data: Pancake[] = [];
+  const data = [];
 
   return {
     viewAll: async () => data,
-    convert: async (pancake: Pancake) => {
-      data.push(pancake);
+    convert: async (conversion: VolumeSchemaObject) => {
+      data.push(conversion);
     },
   };
 }
+
