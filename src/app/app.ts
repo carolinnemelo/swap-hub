@@ -13,7 +13,6 @@ export function createApp() {
   const volumeFeature = convertVolumeFeature();
   app.use("/volume", volumeFeature.getRouter());
 
-
   app.get("/", (req, res) => {
     res.status(200);
     res.send("Welcome to SwapUnit");

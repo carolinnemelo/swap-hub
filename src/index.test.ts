@@ -1,7 +1,7 @@
 import { deepEqual } from "node:assert";
 import test from "node:test";
 import request from "supertest";
-import fs from "fs"
+import fs from "fs";
 import { createApp } from "./app";
 import { convertTemperature } from "./features/temperature/logic";
 import { convertVolume } from "./features/volume/logic";
@@ -36,7 +36,6 @@ test("POST /temperature/convert", async () => {
   deepEqual(result.body.convertedValue, expectedValue);
 });
 
-
 test("POST /temperature/convert - bad request.", async () => {
   const app = createApp();
   const testConvertTemperature = {
@@ -47,10 +46,9 @@ test("POST /temperature/convert - bad request.", async () => {
   const result = await request(app)
     .post("/temperature/convert")
     .send(testConvertTemperature);
-    
+
   deepEqual(result.status, 400);
 });
-
 
 test("GET /volume", async () => {
   const app = createApp();
@@ -67,7 +65,7 @@ test("GET /volume", async () => {
     teaspoon: "tsp",
     tablespoon: "Tbs",
     cubicInch: "in3",
-    fluidOunce: "fl-oz"
+    fluidOunce: "fl-oz",
   };
 
   deepEqual(result.status, 200);
@@ -79,7 +77,6 @@ test("GET /volume/history", async () => {
   const result = await request(app).get("/volume/history");
   deepEqual(result.status, 200);
   deepEqual(result.body.length > 0, true);
-
 });
 
 test("GET /volume/history/2024-nov-02", async () => {
@@ -105,7 +102,11 @@ test("POST /volume/convert", async () => {
 
 test("DELETE /volume/history/2024-nov-01", async () => {
   const app = createApp();
-  fs.writeFileSync("data/volume-conversions-day/2024-nov-01.json", "[]", "utf-8");
+  fs.writeFileSync(
+    "data/volume-conversions-day/2024-nov-01.json",
+    "[]",
+    "utf-8",
+  );
 
   const result = await request(app).delete("/volume/history/2024-nov-01");
   deepEqual(result.status, 200);

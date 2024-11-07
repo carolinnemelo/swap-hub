@@ -2,9 +2,13 @@ import { Router } from "express";
 import fs from "fs";
 import { ZodError } from "zod";
 import { volumeSchema } from "./types";
-import { convertVolume} from "./logic";
+import { convertVolume } from "./logic";
 import { volumeErrors } from "../error-messages";
-import { getVolumeUnits, parseVolumeInputs, saveConversion } from "./conversion-handlers";
+import {
+  getVolumeUnits,
+  parseVolumeInputs,
+  saveConversion,
+} from "./conversion-handlers";
 
 export function convertVolumeFeature() {
   return {
@@ -25,7 +29,7 @@ export function convertVolumeFeature() {
       router.post("/convert", (req, res) => {
         try {
           volumeSchema.parse(req.body);
-          const volumeUnits = getVolumeUnits()
+          const volumeUnits = getVolumeUnits();
           const parsedInputs = parseVolumeInputs(req.body, volumeUnits);
           const { fromUnit, toUnit, value } = parsedInputs;
           const convertedValue = convertVolume(fromUnit, toUnit, value);
@@ -51,7 +55,9 @@ export function convertVolumeFeature() {
         const files = fs.readdirSync("data/volume-conversions-day");
         const file = files.find((file) => file === `${date}.json`);
         if (file) {
-          const fileContent = JSON.parse(fs.readFileSync(`data/volume-conversions-day/${file}`, "utf-8"));
+          const fileContent = JSON.parse(
+            fs.readFileSync(`data/volume-conversions-day/${file}`, "utf-8"),
+          );
           res.status(200).send(fileContent);
         } else {
           res.status(404).send(volumeErrors.invalidFileName);
@@ -63,7 +69,7 @@ export function convertVolumeFeature() {
         const files = fs.readdirSync("data/volume-conversions-day");
         const file = files.find((file) => file === `${date}.json`);
         if (file) {
-          fs.unlinkSync(`data/volume-conversions-day/${file}`)
+          fs.unlinkSync(`data/volume-conversions-day/${file}`);
           res.status(200).send(`${file} deleted.`);
         } else {
           res.status(404).send(volumeErrors.invalidFileName);
@@ -72,5 +78,15 @@ export function convertVolumeFeature() {
 
       return router;
     },
+  };
+}
+
+export function convertVolumeFeature() {
+  const db = createDb();
+  const service = createService(db);
+  const router = createRouter(service);
+  return {
+    service,
+    router,
   };
 }

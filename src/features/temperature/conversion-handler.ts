@@ -9,7 +9,6 @@ export function parseTemperatureInputs(req) {
 
     return { fromUnit, toUnit, value };
   } catch (error) {
-    throw new Error(error.message); 
+    throw new Error(error.message);
   }
 }
-  

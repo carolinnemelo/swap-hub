@@ -1,7 +1,6 @@
 import convert from "convert-units";
 import { volumeErrors } from "../error-messages";
 
-
 export function convertVolume(fromUnit, toUnit, value) {
   if (!fromUnit || !toUnit || value === null || value === undefined) {
     throw new Error(volumeErrors.missingParameters);
@@ -10,15 +9,15 @@ export function convertVolume(fromUnit, toUnit, value) {
   return convertedValue;
 }
 
-export function parseValue (value) {
+export function parseValue(value) {
   value = Number(value);
-  if(isNaN(value)) {
+  if (isNaN(value)) {
     throw new Error(volumeErrors.invalidValue);
   }
-  if(value< 0) {
+  if (value < 0) {
     throw new Error(volumeErrors.negativeValue);
   }
-return value
+  return value;
 }
 
 export function normalizeUnit(unit: string, volumeUnits) {

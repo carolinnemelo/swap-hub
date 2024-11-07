@@ -21,8 +21,8 @@ test("Function converts the volume", async () => {
 
 test("When units are lowercase letter or the whole word, should normalize them.", () => {
   const result: string[] = [];
-  const volumeUnits = getVolumeUnits()
+  const volumeUnits = getVolumeUnits();
   result.push(normalizeUnit("L", volumeUnits));
   result.push(normalizeUnit("milliliter", volumeUnits));
   deepEqual(result, ["l", "ml"]);
-}); 
+});
