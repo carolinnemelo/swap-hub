@@ -1,5 +1,5 @@
 import express from "express";
-import { convertTemperatureFeature } from "../features/temperature/feature";
+import { createTemperatureFeature } from "../features/temperature/feature";
 
 
 export function createApp() {
@@ -7,8 +7,8 @@ export function createApp() {
 
   app.use(express.json());
 
-  const temperatureFeature = convertTemperatureFeature();
-  app.use("/temperature", temperatureFeature.getRouter());
+  const temperatureFeature = createTemperatureFeature();
+  app.use("/temperature", temperatureFeature.router);
 
   const volumeFeature = convertVolumeFeature();
   app.use("/volume", volumeFeature.getRouter());
