@@ -1,13 +1,7 @@
 import fs from "fs";
 import { convertTemperature, isTemperatureRangeValid, normalizeUnit } from "./logic";
-import { z } from "zod";
 import { ConvertObject } from "./types";
-
-export const temperatureSchema = z.object({
-  fromUnit: z.string().min(1),
-  toUnit: z.string().min(1),
-  value: z.string(),
-});
+import { temperatureSchema } from "./z-schema";
 
 export function createService() {
   return {

@@ -1,6 +1,7 @@
 import express from "express";
+import { Service } from "./types";
 
-export function createVolumeRouter(service) {
+export function createVolumeRouter(service: Service) {
   const router = express.Router();
 
   router.get("/", async (req, res) => {

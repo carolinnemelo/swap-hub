@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { createService, temperatureSchema } from "./service";
+import { createService } from "./service";
+import { temperatureSchema } from "./z-schema";
 
 export type ConvertObject = z.infer<typeof temperatureSchema>;
 
