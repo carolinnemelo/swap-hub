@@ -9,11 +9,12 @@ import { getVolumeUnits, parseVolumeInputs, saveConversion } from "./service";
 export function createVolumeRouter(service) {
   const router = express.Router();
 
-  router.get("/", (req, res) => {
+  router.get("/", async (req, res) => {
     res.json(await service.viewAll())
   });
 
   router.get("/", (req, res) => {
+    const volumeUnits = 
     fs.readFile("./data/volume.json", "utf-8", (error, data) => {
       if (error) {
         console.log(error);

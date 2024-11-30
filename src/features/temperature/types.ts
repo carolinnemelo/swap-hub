@@ -1,9 +1,8 @@
 import { z } from "zod";
+import { createService, temperatureSchema } from "./service";
 
-type ConvertObject = z.infer<typeof temperatureSchema>;
+export type ConvertObject = z.infer<typeof temperatureSchema>;
 
-export const temperatureSchema = z.object({
-  fromUnit: z.string().min(1),
-  toUnit: z.string().min(1),
-  value: z.string(),
-});
+export type Service = ReturnType<typeof createService>;
+
+
