@@ -1,7 +1,6 @@
 import fs from "fs";
-import { convertTemperature } from "./logic";
+import { convertTemperature, isTemperatureRangeValid, normalizeUnit } from "./logic";
 import { z } from "zod";
-import { parseTemperatureInputs } from "./conversion-handler";
 import { ConvertObject } from "./types";
 
 export const temperatureSchema = z.object({
@@ -28,12 +27,25 @@ export function createService() {
     async convertTemperature(body: ConvertObject) {
       try {
         temperatureSchema.parse(body);
-        const parsedInputs = parseTemperatureInputs(body);
+        const parsedInputs = this.parseTemperatureInputs(body);
         const { fromUnit, toUnit, value } = parsedInputs;
         const convertedValue = convertTemperature(fromUnit, toUnit, value);
         return convertedValue;
       } catch (error) {
         return;
+      }
+    },
+    
+    async parseTemperatureInputs(req) {
+      let { fromUnit, toUnit, value } = req;
+      try {
+        fromUnit = normalizeUnit(fromUnit);
+        toUnit = normalizeUnit(toUnit);
+        isTemperatureRangeValid(fromUnit, value);
+
+        return { fromUnit, toUnit, value };
+      } catch (error) {
+        throw new Error(error.message);
       }
     },
   };
