@@ -4,6 +4,7 @@ import { normalizeUnit, parseValue } from "./logic";
 import { v4 } from "uuid";
 
 export function createService() {
+
   return {
     async getHistory() {
       return new Promise((resolve, reject) => {

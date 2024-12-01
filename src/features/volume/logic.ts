@@ -21,14 +21,14 @@ export function parseValue(value) {
 }
 
 export function normalizeUnit(unit: string, volumeUnits) {
-  unit = unit.toLowerCase();
+  unit = unit.toLowerCase(); 
   try {
-    if (volumeUnits[unit]) {
-      return volumeUnits[unit];
-    }
-    const values = Object.values(volumeUnits);
+    const values = Object.values(volumeUnits.volumeUnits);
     const unitByValue = values.filter((value) => value === unit);
-    return unit[0];
+    if (unitByValue.length === 0) {
+      return volumeUnits.volumeUnits[unit];
+    }
+    return unitByValue[0];
   } catch {
     throw new Error(volumeErrors.invalidUnit);
   }

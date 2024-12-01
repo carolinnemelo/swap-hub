@@ -6,7 +6,7 @@ import { createApp } from "./app";
 import { convertTemperature } from "./features/temperature/logic";
 import { convertVolume } from "./features/volume/logic";
 
-test("supertest works!", async () => {
+test("App works!", async () => {
   const app = createApp();
   const result = await request(app).get("/");
 
