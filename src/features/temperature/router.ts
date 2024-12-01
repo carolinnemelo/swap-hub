@@ -21,7 +21,6 @@ export function createTemperatureRouter(service: Service) {
   });
 
   router.post("/convert", async (req, res) => {
-    console.log(req.body)
     const convertedValue = await service.convertTemperature(req.body);
     if (!convertedValue) {
       res.status(400).end();

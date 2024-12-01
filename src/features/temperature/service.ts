@@ -23,7 +23,6 @@ export function createService() {
         temperatureSchema.parse(body);
         const parsedInputs = await this.parseTemperatureInputs(body);
         const { fromUnit, toUnit, value } = parsedInputs;
-        console.log({parsedInputs})
         const convertedValue = convertTemperature(fromUnit, toUnit, value);
         return convertedValue.toString();
       } catch (error) {
