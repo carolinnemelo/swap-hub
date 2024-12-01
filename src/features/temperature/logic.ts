@@ -37,6 +37,5 @@ export function convertTemperature(fromUnit, toUnit, value: number) {
     throw new Error(temperatureErrors.missingParameters);
   }
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
-
   return convertedValue;
 }

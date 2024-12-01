@@ -9,7 +9,7 @@ export function createTemperatureRouter(service: Service) {
     if (!temperatureUnits) {
       res.status(401).json({ message: "error reading the file" });
     }
-    res.json({ temperatureUnits });
+    res.json(temperatureUnits);
   });
 
   router.get("/units", async (req, res) => {
@@ -17,15 +17,17 @@ export function createTemperatureRouter(service: Service) {
     if (!temperatureUnits) {
       res.status(401).json({ message: "error reading the file" });
     }
-    res.json({ temperatureUnits });
+    res.json(temperatureUnits);
   });
 
   router.post("/convert", async (req, res) => {
+    console.log(req.body)
     const convertedValue = await service.convertTemperature(req.body);
     if (!convertedValue) {
-      res.status(401).end();
+      res.status(400).end();
+      return;
     }
-    res.status(200).json({ convertedValue });
+    res.status(200).json({convertedValue});
   });
   return router;
 }

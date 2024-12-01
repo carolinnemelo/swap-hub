@@ -7,7 +7,7 @@ export function createService() {
   return {
     async getTemperatureUnits() {
       return new Promise((resolve, reject) => {
-        fs.readFile("./data/temperature.json", "utf-8", (error, data) => {
+        fs.readFile("src/features/temperature/temperature.json", "utf-8", (error, data) => {
           if (error) {
             reject(error);
             return;
@@ -21,10 +21,11 @@ export function createService() {
     async convertTemperature(body: ConvertObject) {
       try {
         temperatureSchema.parse(body);
-        const parsedInputs = this.parseTemperatureInputs(body);
+        const parsedInputs = await this.parseTemperatureInputs(body);
         const { fromUnit, toUnit, value } = parsedInputs;
+        console.log({parsedInputs})
         const convertedValue = convertTemperature(fromUnit, toUnit, value);
-        return convertedValue;
+        return convertedValue.toString();
       } catch (error) {
         return;
       }
@@ -36,7 +37,6 @@ export function createService() {
         fromUnit = normalizeUnit(fromUnit);
         toUnit = normalizeUnit(toUnit);
         isTemperatureRangeValid(fromUnit, value);
-
         return { fromUnit, toUnit, value };
       } catch (error) {
         throw new Error(error.message);
