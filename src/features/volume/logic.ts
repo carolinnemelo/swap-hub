@@ -2,7 +2,7 @@ import convert from "convert-units";
 import { volumeErrors } from "../error-messages";
 
 export function convertVolume(fromUnit, toUnit, value) {
-  if (!fromUnit || !toUnit || value === null || value === undefined) {
+  if (!fromUnit || !toUnit || typeof value !== "number") {
     throw new Error(volumeErrors.missingParameters);
   }
   const convertedValue = convert(value).from(fromUnit).to(toUnit);
@@ -10,26 +10,34 @@ export function convertVolume(fromUnit, toUnit, value) {
 }
 
 export function parseValue(value) {
-  value = Number(value);
+  const numberValue = Number(value);
   if (isNaN(value)) {
     throw new Error(volumeErrors.invalidValue);
   }
   if (value < 0) {
     throw new Error(volumeErrors.negativeValue);
   }
-  return value;
+  return numberValue;
 }
 
-export function normalizeUnit(unit: string, volumeUnits) {
-  unit = unit.toLowerCase(); 
+export function normalizeUnit(unit, volumeUnits) {
   try {
-    const values = Object.values(volumeUnits.volumeUnits);
-    const unitByValue = values.filter((value) => value === unit);
-    if (unitByValue.length === 0) {
-      return volumeUnits.volumeUnits[unit];
+    const lowerCaseUnit = unit.toLowerCase(); 
+    const keys = Object.keys(volumeUnits);
+    const values = Object.values(volumeUnits); 
+    if (lowerCaseUnit === "tablespoon") {
+      const correctUnit = "Tbs"; 
+        return correctUnit; 
+
     }
-    return unitByValue[0];
-  } catch {
-    throw new Error(volumeErrors.invalidUnit);
+    if (keys.includes(lowerCaseUnit)) {
+      return volumeUnits[lowerCaseUnit];
+    }
+    if (values.includes(lowerCaseUnit)) {
+      return lowerCaseUnit;
+    }
+    console.log("INVALID UINT")
+  } catch (error) {
+    throw new Error(volumeErrors.invalidUnit || "Invalid unit");
   }
 }

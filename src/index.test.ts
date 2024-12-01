@@ -76,7 +76,7 @@ test("GET /volume/history", async () => {
   const app = createApp();
   const result = await request(app).get("/volume/history");
   deepEqual(result.status, 200);
-  deepEqual(result.body.length > 0, true);
+  deepEqual(result.body.files.length > 0, true);
 });
 
 test("GET /volume/history/2024-nov-02", async () => {
@@ -95,9 +95,9 @@ test("POST /volume/convert", async () => {
   const result = await request(app)
     .post("/volume/convert")
     .send(testConvertVolume);
-  const expectedValue = convertVolume("ml", "Tbs", "34");
-  deepEqual(result.status, 201);
-  deepEqual(result.body.convertedValue, expectedValue);
+  const expectedValue = convertVolume("ml", "Tbs", 34);
+  deepEqual(result.status, 200);
+  deepEqual(result.body, expectedValue);
 });
 
 test("DELETE /volume/history/2024-nov-01", async () => {

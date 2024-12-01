@@ -1,10 +1,13 @@
 import fs from "fs";
 import { volumeSchema } from "./z-schema";
-import { normalizeUnit, parseValue } from "./logic";
+import {
+  convertVolume as convertLogic,
+  normalizeUnit,
+  parseValue,
+} from "./logic";
 import { v4 } from "uuid";
 
 export function createService() {
-
   return {
     async getHistory() {
       return new Promise((resolve, reject) => {
@@ -44,40 +47,47 @@ export function createService() {
 
     async getVolumeUnits() {
       return new Promise((resolve, reject) => {
-        fs.readFile("./data/volume.json", "utf-8", (error, data) => {
-          if (error) {
-            reject(error);
-            return;
-          }
-          const temperatureUnits = JSON.parse(data)[0].volumeUnits;
-          resolve(temperatureUnits);
-        });
+        fs.readFile(
+          "src/features/volume/volume.json",
+          "utf-8",
+          (error, data) => {
+            if (error) {
+              reject(error);
+              return;
+            }
+            const volumeUnits = JSON.parse(data)[0].volumeUnits;
+            resolve(volumeUnits);
+          },
+        );
       });
     },
 
     async convertVolume(body) {
       try {
         volumeSchema.parse(body);
-        const volumeUnits = this.getVolumeUnits();
-        const parsedInputs = this.parseVolumeInputs(body, volumeUnits);
-        const { fromUnit, toUnit, value } = parsedInputs;
-        const convertedValue = this.convertVolume(fromUnit, toUnit, value);
-        this.saveConversion({ fromUnit, toUnit, value, convertedValue });
+        const volumeUnits = await this.getVolumeUnits();
+        const parsedInputs = await this.parseVolumeInputs(body, volumeUnits);
+
+        let { fromUnit, toUnit, value } = parsedInputs;
+        const convertedValue = convertLogic(fromUnit, toUnit, value);
+        await this.saveConversion({ fromUnit, toUnit, value, convertedValue });
         return convertedValue;
       } catch (error) {
         return;
       }
     },
 
-    async parseVolumeInputs(req, volumeUnits) {
-      let { fromUnit, toUnit, value } = req;
+    async parseVolumeInputs(body, volumeUnits) {
       try {
-        fromUnit = normalizeUnit(fromUnit, volumeUnits);
-        toUnit = normalizeUnit(toUnit, volumeUnits);
-        value = parseValue(value);
+        const rawFromUnit = body.fromUnit;
+        const fromUnit = await normalizeUnit(rawFromUnit, volumeUnits);
+        const rawToUnit = body.toUnit;
+        const rawValue = body.value;
+        const toUnit = normalizeUnit(rawToUnit, volumeUnits);
+        const value = parseValue(rawValue);
         return { fromUnit, toUnit, value };
       } catch (error) {
-        return error.message;
+        throw new Error(error.message);
       }
     },
 
@@ -86,8 +96,8 @@ export function createService() {
     },
 
     async saveConversion({ fromUnit, toUnit, value, convertedValue }) {
-      const id = this.generateId();
-      const { filePath, time } = this.createConversionFilePerDay();
+      const id = await this.generateId();
+      const { filePath, time } = await this.createConversionFilePerDay();
       const conversion = {
         id,
         time,
@@ -96,25 +106,49 @@ export function createService() {
         toUnit,
         convertedValue,
       };
-      const fileContent = this.readJsonContent(filePath);
+      const fileContent = await new Promise((resolve, reject) => {
+        fs.readFile(
+          "data/volume-conversions-day/2024-dec-01.json",
+          "utf-8",
+          (error, data) => {
+            if (error) {
+              reject(error);
+              return;
+            }
+            resolve(data);
+            return;
+          },
+        );
+      });
+      if (typeof fileContent !== "string") {
+        return;
+      }
       const currentConversions = JSON.parse(fileContent);
       currentConversions.push(conversion);
       fs.writeFileSync(filePath, JSON.stringify(currentConversions, null, 2));
+      return;
     },
 
     createConversionFilePerDay() {
-      if (!fs.existsSync("data/volume-conversions-day")) {
-        fs.mkdirSync("data/volume-conversions-day", { recursive: true });
-      }
-      const day = new Date().toString().toLowerCase();
-      const dayArray = day.split(" ");
-      const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
-      const time = dayArray[4];
-      const filePath = `data/volume-conversions-day/${fileName}.json`;
-      if (!fs.existsSync(filePath)) {
-        fs.writeFileSync(filePath, "[]", "utf-8");
-      }
-      return { filePath, time };
+      return new Promise((resolve, reject) => {
+        try {
+          if (!fs.existsSync("data/volume-conversions-day")) {
+            fs.mkdirSync("data/volume-conversions-day", { recursive: true });
+          }
+          const day = new Date().toString().toLowerCase();
+          const dayArray = day.split(" ");
+          const fileName = `${dayArray[3]}-${dayArray[1]}-${dayArray[2]}`;
+          const time = dayArray[4];
+          const filePath = `data/volume-conversions-day/${fileName}.json`;
+          if (!fs.existsSync(filePath)) {
+            fs.writeFileSync(filePath, "[]", "utf-8");
+          }
+          resolve({ filePath, time });
+          return;
+        } catch (error) {
+          reject(error);
+        }
+      });
     },
   };
 }

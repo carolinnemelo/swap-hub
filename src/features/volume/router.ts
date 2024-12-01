@@ -9,15 +9,16 @@ export function createVolumeRouter(service: Service) {
     if (!volumeUnits) {
       res.status(401).json({ message: "error reading the file" });
     }
-    res.json({ volumeUnits });
+    res.json(volumeUnits);
   });
 
   router.post("/convert", async (req, res) => {
     const convertedValue = await service.convertVolume(req.body);
     if (!convertedValue) {
       res.status(401).end();
+      return;
     }
-    res.json({ convertedValue });
+    res.json( convertedValue );
   });
 
   router.get("/history", async (req, res) => {
