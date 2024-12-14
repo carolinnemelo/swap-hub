@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 import { Repository } from "./types";
 
 export function createService(repository: Repository) {
