@@ -27,10 +27,6 @@ export function createService(repository: Repository) {
       return repository.parseVolumeInputs(body, volumeUnits);
     },
 
-    async generateId() {
-      return v4();
-    },
-
     async saveConversion({ fromUnit, toUnit, value, convertedValue }) {
       return repository.saveConversion({
         fromUnit,
@@ -39,7 +35,7 @@ export function createService(repository: Repository) {
         convertedValue,
       });
     },
-    
+
     createConversionFilePerDay() {
       return repository.createConversionFilePerDay();
     },
