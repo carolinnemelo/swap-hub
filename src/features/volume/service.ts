@@ -1,4 +1,3 @@
-import fs from "fs";
 import { volumeSchema } from "./z-schema";
 import {
   convertVolume as convertLogic,
@@ -6,18 +5,12 @@ import {
   parseValue,
 } from "./logic";
 import { v4 } from "uuid";
+import { Repository } from "./types";
 
-export function createService() {
+export function createService(repository: Repository) {
   return {
-    async getHistory() {
-      return new Promise((resolve, reject) => {
-        const files = fs.readdirSync("data/volume-conversions-day");
-        if (!files) {
-          reject();
-          return;
-        }
-        resolve(files);
-      });
+    async getHistory(filePath: string) {
+      return repository.getHistory(filePath)
     },
 
     async getHistoryByDate(date) {
