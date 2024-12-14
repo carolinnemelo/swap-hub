@@ -9,20 +9,12 @@ import { Repository } from "./types";
 
 export function createService(repository: Repository) {
   return {
-    async getHistory(filePath: string) {
-      return repository.getHistory(filePath)
+    async getHistory() {
+      return repository.getHistory();
     },
 
-    async getHistoryByDate(date) {
-      return new Promise((resolve, reject) => {
-        const files = fs.readdirSync("data/volume-conversions-day");
-        const file = files.find((file) => file === `${date}.json`);
-        if (!file) {
-          reject();
-          return;
-        }
-        resolve(file);
-      });
+    async getHistoryByDate(date: string) {
+      return repository.getHistoryByDate(date);
     },
 
     async deleteHistoryByDate(date: string) {
