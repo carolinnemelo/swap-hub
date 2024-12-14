@@ -62,22 +62,20 @@ export function createRepository() {
     },
 
     async convertVolume(body) {
-      console.log("body", body);
       try {
         volumeSchema.parse(body);
         const volumeUnits = await this.getVolumeUnits();
-        console.log("volumeUnits", volumeUnits);
+
         const parsedInputs = await this.parseVolumeInputs(body, volumeUnits);
-        console.log("parsedInputs", parsedInputs);
-        let { fromUnit, toUnit, value } = parsedInputs;
-        console.log( {fromUnit, toUnit, value });
+
+        const { fromUnit, toUnit, value } = parsedInputs;
+
         const convertedValue = convertLogic(fromUnit, toUnit, value);
         await this.saveConversion({ fromUnit, toUnit, value, convertedValue });
-        console.log("convertedValue", convertedValue);
         return convertedValue;
         
       } catch (error) {
-        return;
+        return error.message;
       }
     },
 
