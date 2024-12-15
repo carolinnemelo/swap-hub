@@ -1,11 +1,4 @@
 import fs from "fs";
-import { volumeSchema } from "./z-schema";
-import {
-  convertVolume as convertLogic,
-  normalizeUnit,
-  parseValue,
-} from "./logic";
-import { v4 } from "uuid";
 
 export function createRepository() {
   return {
@@ -61,54 +54,7 @@ export function createRepository() {
       });
     },
 
-    async convertVolume(body) {
-      try {
-        volumeSchema.parse(body);
-        const volumeUnits = await this.getVolumeUnits();
-
-        const parsedInputs = await this.parseVolumeInputs(body, volumeUnits);
-
-        const { fromUnit, toUnit, value } = parsedInputs;
-
-        const convertedValue = convertLogic(fromUnit, toUnit, value);
-        await this.saveConversion({ fromUnit, toUnit, value, convertedValue });
-        return convertedValue;
-        
-      } catch (error) {
-        return error.message;
-      }
-    },
-
-    async parseVolumeInputs(body, volumeUnits) {
-      try {
-        const rawFromUnit = body.fromUnit;
-        const fromUnit = await normalizeUnit(rawFromUnit, volumeUnits);
-        const rawToUnit = body.toUnit;
-        const rawValue = body.value;
-        const toUnit = normalizeUnit(rawToUnit, volumeUnits);
-        const value = parseValue(rawValue);
-        return { fromUnit, toUnit, value };
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    },
-
-    async generateId() {
-      return v4();
-    },
-    
-    async saveConversion({ fromUnit, toUnit, value, convertedValue }) {
-
-      const id = await this.generateId();
-      const { filePath, time } = await this.createConversionFilePerDay();
-      const conversion = {
-        id,
-        time,
-        fromUnit,
-        value,
-        toUnit,
-        convertedValue,
-      };
+    async saveConversion({ filePath, conversion }) {
       const fileContent = await new Promise((resolve, reject) => {
         fs.readFile(
           "data/volume-conversions-day/2024-dec-01.json",
@@ -154,5 +100,4 @@ export function createRepository() {
       });
     },
   };
-
 }

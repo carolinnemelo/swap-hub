@@ -38,6 +38,7 @@ export function normalizeUnit(unit, volumeUnits) {
     }
     console.log("INVALID UINT")
   } catch (error) {
+    console.log(error.message);
     throw new Error(volumeErrors.invalidUnit || "Invalid unit");
   }
 }
